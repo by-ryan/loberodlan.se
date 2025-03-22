@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>LAN i Löberöd</title>
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+
+  <style>
+    @font-face {
+      font-family: LCD;
+      src: url('font.ttf');
+    }
+
+    html {
+      min-height: 100dvh;
+    }
+
+    html,
+    body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    body {
+      font-family: LCD;
+    }
+
+    #timer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .divider {
+      color: rgb(200, 200, 200);
+    }
+
+    body {
+      font-size: calc(48px + (88 - 48) * ((100vw - 300px) / (1600 - 300)));
+    }
+  </style>
+</head>
+
+<body>
+  <div id="timer">
+    <div id="hours"></div>
+    <div class="divider">:</div>
+    <div id="minutes"></div>
+    <div class="divider">:</div>
+    <div id="seconds"></div>
+  </div>
+
+  <script>
+    var countDownDate = new Date("April 12, 2025 12:0:0").getTime();
+
+    var timer = document.getElementById("timer");
+    var element_hours = document.getElementById("hours");
+    var element_minutes = document.getElementById("minutes");
+    var element_seconds = document.getElementById("seconds");
+
+    function update() {
+      var now = new Date().getTime();
+
+      var distance = countDownDate - now;
+
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      var x = Math.floor(days * 24) + hours;
+
+
+      element_hours.innerHTML = x.toString().padStart(3, "0");
+      element_minutes.innerHTML = minutes.toString().padStart(2, "0");
+      element_seconds.innerHTML = seconds.toString().padStart(2, "0");
+
+      //timer.innerHTML = x + "<span class='blink'>:</span>" + minutes + ":" + seconds
+
+      if (distance < 0) {
+        clearInterval(x);
+        timer.innerHTML = "EXPIRED";
+      }
+    }
+
+    update();
+
+    var x = setInterval(() => update(), 1000);
+  </script>
+</body>
+
+</html>
