@@ -740,13 +740,13 @@
                 <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
                 <nav id="main-nav">
                     <ul>
-                        <li><a href="#om">Om oss</a></li>
-                        <li><a href="#medlemskap">Medlemskap</a></li>
-                        <li><a href="#info">Information</a></li>
-                        <li><a href="#packning">Packning</a></li>
-                        <li><a href="#faq">FAQ</a></li>
-                        <li><a href="#sponsorer">Sponsorer</a></li>
-                        <li><a href="#kontakt">Kontakt</a></li>
+                        <li><a class="local" href="#om">Om oss</a></li>
+                        <li><a class="local" href="#medlemskap">Medlemskap</a></li>
+                        <li><a class="local" href="#info">Information</a></li>
+                        <li><a class="local" href="#packning">Packning</a></li>
+                        <li><a class="local" href="#faq">FAQ</a></li>
+                        <li><a class="local" href="#sponsorer">Sponsorer</a></li>
+                        <li><a class="local" href="#kontakt">Kontakt</a></li>
                     </ul>
                 </nav>
             </div>
@@ -1186,7 +1186,8 @@
 
     <script>
         // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('a.local').forEach(anchor => {
+            console.log(anchor);
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -1290,11 +1291,11 @@
                 // Visa anmälningsknappar
                 heroButton.style.display = 'inline-block';
                 heroButton.textContent = 'Anmäl dig nu!';
-                heroButton.href = '#'; // Sätt er riktiga anmälningslänk här
+                heroButton.href = 'https://loberod.se/lan-anmalan/'; // Sätt er riktiga anmälningslänk här
 
                 if (kontaktButton) {
                     kontaktButton.textContent = 'Anmäl dig här';
-                    kontaktButton.href = '#'; // Sätt er riktiga anmälningslänk här
+                    kontaktButton.href = 'https://loberod.se/lan-anmalan/'; // Sätt er riktiga anmälningslänk här
                 }
 
                 // Ta bort eventuellt stängt-meddelande
