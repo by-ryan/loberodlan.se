@@ -793,8 +793,7 @@
                     <h2>📣 Viktig information om medlemskap</h2>
 
                     <div class="highlight-box" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
-                        <h3>⚠️ Nytt krav från och med nästa LAN</h3>
-                        <p><strong>För att delta krävs att någon i deltagarens hushåll är medlem i Löberöds Hembygdsförening.</strong></p>
+                                <p><strong>För att delta krävs att någon i deltagarens hushåll är medlem i Löberöds Hembygdsförening.</strong></p>
                     </div>
 
                     <h3>💡 Varför kräver vi medlemskap?</h3>
@@ -948,7 +947,7 @@
                                 <span class="faq-toggle">+</span>
                             </div>
                             <div class="faq-answer">
-                                <p>Av säkerhetsskäl får endast dator, monitor och spelkonsol kopplas in i uttagen. Annan utrustning som kylskåp, mikrovågsugn, hårtork, etc. är inte tillåten. Det är ok att koppla in Morin i utag, fråga Admin eller Crew om hjälp med detta.</p>
+                                <p>Av säkerhetsskäl får endast dator, monitor och spelkonsol kopplas in i uttagen. Annan utrustning som kylskåp, mikrovågsugn, hårtork, etc. är inte tillåten.</p>
                             </div>
                         </div>
 
@@ -958,7 +957,7 @@
                                 <span class="faq-toggle">+</span>
                             </div>
                             <div class="faq-answer">
-                                <p>Ja, från och med nästa LAN krävs att någon i deltagarens hushåll är medlem i Löberöds Hembygdsförening.</p>
+                                <p>Ja, för att delta i LAN:et krävs att någon i deltagarens hushåll är medlem i Löberöds Hembygdsförening.</p>
                             </div>
                         </div>
 
@@ -1180,7 +1179,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 LöberödLAN - Ett ideellt evenemang för alla åldrar</p>
+            <p>&copy; 2026 LöberödLAN - Ett ideellt evenemang för alla åldrar</p>
         </div>
     </footer>
 
@@ -1273,9 +1272,9 @@
 
         // Anmälningsstatus - Ändra detta för att styra anmälningsknappen
         const REGISTRATION_CONFIG = {
-            isOpen: true, // Sätt till true för att visa anmälningsknapp, false för att dölja
+            isOpen: false, // Sätt till true för att visa anmälningsknapp, false för att dölja
             message: "Anmälan till nästa LAN öppnar snart! Håll koll på vår Discord för uppdateringar.", // Meddelande när anmälan är stängd
-            nextEventDate: "Vinter 2025" // När nästa event är planerat
+            nextEventDate: "Vinter 2026" // När nästa event är planerat
         };
 
         // Uppdatera anmälningsstatus när sidan laddar
@@ -1291,11 +1290,11 @@
                 // Visa anmälningsknappar
                 heroButton.style.display = 'inline-block';
                 heroButton.textContent = 'Anmäl dig nu!';
-                heroButton.href = 'https://loberod.se/lan-anmalan/'; // Sätt er riktiga anmälningslänk här
+                heroButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; // Sätt er riktiga anmälningslänk här
 
                 if (kontaktButton) {
                     kontaktButton.textContent = 'Anmäl dig här';
-                    kontaktButton.href = 'https://loberod.se/lan-anmalan/'; // Sätt er riktiga anmälningslänk här
+                    kontaktButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; // Sätt er riktiga anmälningslänk här
                 }
 
                 // Ta bort eventuellt stängt-meddelande
