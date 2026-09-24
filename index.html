@@ -914,7 +914,8 @@
                             <h3>Mat & Dryck</h3>
                             <p>• Middag, nattmat (pommes) och lättare frukost<br>
                             • Två läsk ingår<br>
-                            • Frukt tillgängligt</p>
+                            • Frukt tillgängligt<br>
+                            • Mikrovågsugn finns för uppvärmning av egen mat. (kyl finns ej att tillgå)</p>
                         </div>
 
                         <div class="feature-card">
@@ -1270,17 +1271,57 @@
             question.classList.toggle('active');
         }
 
-        // Anmälningsstatus - Ändra detta för att styra anmälningsknappen
+        // Anmälningsstatus - Konfiguration för nedräkningen
         const REGISTRATION_CONFIG = {
-            isOpen: false, // Sätt till true för att visa anmälningsknapp, false för att dölja
-            message: "Anmälan till nästa LAN öppnar snart! Håll koll på vår Discord för uppdateringar.", // Meddelande när anmälan är stängd
-            nextEventDate: "Vinter 2026" // När nästa event är planerat
+            isOpen: false, // Denna styrs nu automatiskt av nedräkningen
+            openDate: new Date("2026-09-24T18:00:00").getTime(), // ÄNDRA DATUM OCH TID HÄR FÖR NÄR ANMÄLAN SKA ÖPPNA
+            message: "Anmälan till nästa LAN öppnar snart! Håll koll på vår Discord för uppdateringar.", 
+            nextEventDate: "Hösten 2026" 
         };
+
+        let countdownInterval;
 
         // Uppdatera anmälningsstatus när sidan laddar
         document.addEventListener('DOMContentLoaded', function() {
-            updateRegistrationStatus();
+            startCountdown();
         });
+
+        function startCountdown() {
+            checkTime(); // Kolla tiden direkt
+            countdownInterval = setInterval(checkTime, 1000); // Starta uppdatering varje sekund
+        }
+
+        function checkTime() {
+            const now = new Date().getTime();
+            const distance = REGISTRATION_CONFIG.openDate - now;
+
+            if (distance <= 0) {
+                // Tiden är ute, visa anmälningsknapparna
+                clearInterval(countdownInterval);
+                if (!REGISTRATION_CONFIG.isOpen) {
+                    REGISTRATION_CONFIG.isOpen = true;
+                    updateRegistrationStatus();
+                }
+            } else {
+                // Tiden har inte gått ut ännu, uppdatera nedräkningen
+                if (REGISTRATION_CONFIG.isOpen) {
+                    REGISTRATION_CONFIG.isOpen = false;
+                }
+                
+                // Anropa statusuppdatering så blocket är renderat
+                updateRegistrationStatus(); 
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const timerElement = document.getElementById('countdown-display');
+                if (timerElement) {
+                    timerElement.innerHTML = `⏳ Anmälan öppnar om:<br>${days}d ${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+        }
 
         function updateRegistrationStatus() {
             const heroButton = document.querySelector('.hero .cta-button');
@@ -1290,18 +1331,17 @@
                 // Visa anmälningsknappar
                 heroButton.style.display = 'inline-block';
                 heroButton.textContent = 'Anmäl dig nu!';
-                heroButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; // Sätt er riktiga anmälningslänk här
+                heroButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; 
 
                 if (kontaktButton) {
+                    kontaktButton.style.display = 'inline-block'; // Lagt till denna för att säkerställa att den syns igen
                     kontaktButton.textContent = 'Anmäl dig här';
-                    kontaktButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; // Sätt er riktiga anmälningslänk här
+                    kontaktButton.href = 'https://forms.gle/zsGUEECYEBJsqxmC9'; 
                 }
 
-                // Ta bort eventuellt stängt-meddelande
-                const closedMessage = document.querySelector('.registration-closed');
-                if (closedMessage) {
-                    closedMessage.remove();
-                }
+                // Ta bort alla eventuella stängt-meddelanden (ändrat till querySelectorAll)
+                const closedMessages = document.querySelectorAll('.registration-closed');
+                closedMessages.forEach(msg => msg.remove());
             } else {
                 // Dölj anmälningsknappar och visa meddelande
                 heroButton.style.display = 'none';
@@ -1310,14 +1350,15 @@
                     kontaktButton.style.display = 'none';
                 }
 
-                // Lägg till meddelande om stängd anmälan (om det inte redan finns)
+                // Lägg till meddelande om stängd anmälan och nedräkning (om det inte redan finns)
                 if (!document.querySelector('.registration-closed')) {
                     // I hero-sektionen
                     const heroContainer = document.querySelector('.hero .container');
                     const closedMessageHero = document.createElement('div');
                     closedMessageHero.className = 'registration-closed';
                     closedMessageHero.innerHTML = `
-                        <div style="background: rgba(255, 193, 7, 0.9); color: #333; padding: 1rem 2rem; border-radius: 50px; margin-top: 1rem; display: inline-block; font-weight: 500;">
+                        <div style="background: rgba(255, 193, 7, 0.9); color: #333; padding: 1rem 2rem; border-radius: 50px; margin-top: 1rem; display: inline-block; font-weight: 500; text-align: center;">
+                            <div id="countdown-display" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 0.5rem; color: #d35400;">Laddar nedräkning...</div>
                             📅 ${REGISTRATION_CONFIG.message}
                         </div>
                     `;
